@@ -42,7 +42,6 @@ const SearchHistoryPage = () => {
         const res = await axios.get(`/api/v1/search/history`);
         setSearchHistory(res.data.content);
       } catch (error) {
-        console.log(error.message);
         setSearchHistory([]);
       }
     };
@@ -54,7 +53,6 @@ const SearchHistoryPage = () => {
       await axios.delete(`/api/v1/search/history/${entry.id}`);
       setSearchHistory(searchHistory.filter((item) => item.id !== entry.id));
     } catch (error) {
-      console.log(error);
       toast.error("Failed to delete search item");
     }
   };
@@ -63,7 +61,7 @@ const SearchHistoryPage = () => {
     return (
       <div className='bg-black min-h-screen text-white'>
         <Navbar />
-        <div className='max-w-6xl max-auto px-4 py-8'>
+        <div className='max-w-6xl mx-auto px-4 py-8'>
           <h1 className='text-3xl font-bold mb-8'>Search History</h1>
           <div className='flex justify-center items-center h-96'>
             <p className='text-xl'>No search history found</p>
@@ -72,12 +70,14 @@ const SearchHistoryPage = () => {
       </div>
     );
   }
+
   return (
     <div className='bg-black text-white min-h-screen'>
       <Navbar />
+
       <div className='max-w-6xl mx-auto px-4 py-8'>
         <h1 className='text-3xl font-bold mb-8'>Search History</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4'>
           {searchHistory?.map((entry) => (
             <div
               key={entry.id}
@@ -86,7 +86,7 @@ const SearchHistoryPage = () => {
               <img
                 src={SMALL_IMG_BASE_URL + entry.image}
                 alt='History image'
-                className='size-16 rounded-full object-cover mr-4 '
+                className='size-16 rounded-full object-cover mr-4'
               />
               <div className='flex flex-col'>
                 <span className='text-white text-lg'>{entry.title}</span>
@@ -94,6 +94,7 @@ const SearchHistoryPage = () => {
                   {formatDate(entry.createdAt)}
                 </span>
               </div>
+
               <span
                 className={`py-1 px-3 min-w-20 text-center rounded-full text-sm  ml-auto ${
                   entry.searchType === "movie"
@@ -116,5 +117,4 @@ const SearchHistoryPage = () => {
     </div>
   );
 };
-
 export default SearchHistoryPage;
